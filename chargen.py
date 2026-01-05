@@ -212,7 +212,7 @@ class Character:
                         self.charclass = random.choice(["Crusader", "Shaman"])
                     elif self.sex == "Female":
                         self.charclass = random.choice(
-                            "Crusader", "Bladedancer", "Priestess", "Witch")
+                            ["Crusader", "Bladedancer", "Priestess", "Witch"])
                 elif self.race == "Dwarf":
                     self.charclass = "Craftpriest"
             elif self.class_type == "Social":
