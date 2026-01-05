@@ -151,7 +151,7 @@ class Character:
         elif max(self.ability_dict, key=self.ability_dict.get) == "intellect":
             self.class_type = "Arcane"
         elif max(self.ability_dict, key=self.ability_dict.get) == "will":
-            self.class_type == "Divine"
+            self.class_type = "Divine"
         elif max(self.ability_dict, key=self.ability_dict.get) == "charisma":
             self.class_type = "Social"
         else:
