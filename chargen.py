@@ -18,30 +18,52 @@ class Template:
 
 class Character:
     def __init__(self, level):
-        self.load_equipment()
         self.level = level
         self.shield = False
         self.hp = 1
-        self.weapon = self.equipment_dict["Staff"]
-        self.armor = self.equipment_dict["Tunic"]
         self.ac = 0
-        self. damage = "1d6"
+        self.damage = "1d6"
         self.class_type = "Martial"
         self.sex = random.choice(["Male", "Female"])
+        self.charclass: str = ''
+        self.template_source_dict: dict = dict()
+        self.template: Template|None = None
+        self.name: str = ''
+        self.class_category: str = ''
+        self.equipment_source_dict: dict = dict()
+        self.equipment_dict: dict = dict()
+        self.proficiencies: dict = dict()
+        self.equipment: str = ''
+        self.strength: int = 0
+        self.dexterity: int = 0
+        self.constitution: int = 0
+        self.intellect: int = 0
+        self.will: int = 0
+        self.charisma: int = 0
+        self.strength_modifier: int = 0
+        self.dexterity_modifier: int = 0
+        self.constitution_modifier: int = 0
+        self.intellect_modifier: int = 0
+        self.will_modifier: int = 0
+        self.charisma_modifier: int = 0
+        self.ability_dict: dict = dict()
+        self.race: str = ''
+        self.load_equipment()
+        self.weapon = self.equipment_dict["Staff"]
+        self.armor = self.equipment_dict["Tunic"]
         self.generate_abilities()
-        self.class_type_chooser()
         self.race_chooser()
+        self.class_type_chooser()
         self.class_chooser()
+        self.load_templates()
         self.hp_gen()
         self.name_gen()
-        self.load_templates()
         self.proficiency_string = ", ".join (self.proficiencies)
         self.equipment_string = ", ".join (self.equipment)
 
     def load_equipment(self):
         with open("data/equipment.json", "r") as equipment_file:
             self.equipment_source_dict = json.load(equipment_file)
-        self.equipment_dict = {}
         for item in self.equipment_source_dict:
             self.equipment_dict[self.equipment_source_dict[item]
                                 ["name"]] = equipment.Item()
@@ -119,8 +141,6 @@ class Character:
                 if self.shield:
                     self.ac += 1
                 self.damage = self.weapon.damage
-                self.proficiencies = {}
-                self.equipment = ""
                 self.charclass = self.template.name
 
     def generate_abilities(self):
@@ -151,7 +171,7 @@ class Character:
         elif max(self.ability_dict, key=self.ability_dict.get) == "intellect":
             self.class_type = "Arcane"
         elif max(self.ability_dict, key=self.ability_dict.get) == "will":
-            self.class_type == "Divine"
+            self.class_type = "Divine"
         elif max(self.ability_dict, key=self.ability_dict.get) == "charisma":
             self.class_type = "Social"
         else:
@@ -206,13 +226,13 @@ class Character:
                 elif self.race == "Elf":
                     self.charclass = random.choice(
                         ["Spellsword", "Nightblade"])
-            elif self.class_type == "Divine":
+            elif self.class_type == "Divine" and self.race is not "Elf":
                 if self.race == "Human":
                     if self.sex == "Male":
                         self.charclass = random.choice(["Crusader", "Shaman"])
                     elif self.sex == "Female":
                         self.charclass = random.choice(
-                            "Crusader", "Bladedancer", "Priestess", "Witch")
+                            ["Crusader", "Bladedancer", "Priestess", "Witch"])
                 elif self.race == "Dwarf":
                     self.charclass = "Craftpriest"
             elif self.class_type == "Social":
