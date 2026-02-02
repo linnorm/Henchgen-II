@@ -226,7 +226,7 @@ class Character:
                 elif self.race == "Elf":
                     self.charclass = random.choice(
                         ["Spellsword", "Nightblade"])
-            elif self.class_type == "Divine" and self.race is not "Elf":
+            elif self.class_type == "Divine" and self.race != "Elf":
                 if self.race == "Human":
                     if self.sex == "Male":
                         self.charclass = random.choice(["Crusader", "Shaman"])
